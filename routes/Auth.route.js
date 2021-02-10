@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('./../models/Auth.model');
 const createErrors = require('http-errors');
 const { authSchema } = require('../helpers/validation_schema');
-const { signAccessToken } = require('../helpers/jwt_helper');
+const { signAccessToken, signRefreshToken, verifyRefreshToken } = require('../helpers/jwt_helper');
 
 router.post('/register', async (req, res, next) => {
     try {
@@ -45,7 +45,9 @@ router.post('/login', async (req, res, next) => {
             throw createErrors.Unauthorized('Username or password is incorrect');
         }
         const accessToken = await signAccessToken(user.id);
-        res.send({ accessToken });
+        const refreshToken = await signRefreshToken(user.id);
+
+        res.send({ accessToken, refreshToken });
     } catch(error) {
         if (error.isJoi === true) {
             return next(createErrors.BadRequest('Invalid email or password'));
@@ -55,7 +57,21 @@ router.post('/login', async (req, res, next) => {
 })
 
 router.post('/refresh-token', async (req, res, next) => {
-    console.log('refresh-token')
+    try {
+        const { refreshToken } = req.body;
+        if (!refreshToken) {
+            throw createErrors.BadRequest();
+        }
+
+        const userId = await verifyRefreshToken(refreshToken);
+        const accessToken = await signAccessToken(userId);
+        const refToken = await signRefreshToken(userId);
+
+        res.send({ accessToken: accessToken,  refreshToken: refToken});
+
+    } catch(error) {
+        throw error;
+    }
 })
 
 router.post('/logout', async (req, res, next) => {

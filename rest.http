@@ -1,5 +1,5 @@
 GET http://localhost:3001
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTI4NTE4MjQsImV4cCI6MTYxMjg1MTgzOSwiYXVkIjoiNjAyMjIxNzdhOTRhZTU1YTJmM2EwOGMzIiwiaXNzIjoicGlja3VycGFnZS5jb20ifQ.EN6dV7ogGpsWM-knxJgkvTv5VrKd2BmUwrw7BLBnOOI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTI5MjQxMTYsImV4cCI6MTYxMjkyNDEzNiwiYXVkIjoiNjAyMjIxNzdhOTRhZTU1YTJmM2EwOGMzIiwiaXNzIjoicGlja3VycGFnZS5jb20ifQ.p0WneGREsb7545xKdBWmz_EuOAVCtxJPXqlUj3xTZ5A
 ###
 
 GET http://localhost:3001/325983
@@ -26,3 +26,13 @@ Content-Type: application/json
     "email":"duynv1895@gmail.com",
     "password": "duy123456"
 }
+
+###
+POST http://localhost:3001/auth/refresh-token
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTI5MjUwMzcsImV4cCI6MTY0NDQ4MjYzNywiYXVkIjoiNjAyMjIxNzdhOTRhZTU1YTJmM2EwOGMzIiwiaXNzIjoicGlja3VycGFnZS5jb20ifQ.jMoW5pD20o9WpDmVfM5Okrg-jhkzPjeYLIRJVePtAi0"
+}
+
+
